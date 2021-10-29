@@ -1,27 +1,27 @@
-PROBLEM:
-Znalezienie skarbu w labiryncie
+#PROBLEM:
+#Znalezienie skarbu w labiryncie
 
-RZECZY:
--Arduino
--Encoder
--Sensory odległości
--Obudowa
--Koła
--Silniki
+#RZECZY:
+#-Arduino
+#-Encoder
+#-Sensory odległości
+#-Obudowa
+#-Koła
+#-Silniki
 
 
-MVP:
-Pojazd który po wykryciu ściany skręca w miejscu, robi mapę jazdy i liczy ile przejechał labiryntu
+#MVP:
+#Pojazd który po wykryciu ściany skręca w miejscu, robi mapę jazdy i liczy ile przejechał labiryntu
 
-MYSZ:
--Pojazd zdolny do skrętów w miejscu i jazdy prosto
--Wykrywanie ścian
--Precyzyjny obrót
--Labirynt (16x16)
--Mapowanie
--Przeliczanie najszybszej trasy
--Samodzielne zasilanie
--Pomiar czasu
--Wykrycie celu
--10 minut czasu
--Karta SD
+#MYSZ:
+#-Pojazd zdolny do skrętów w miejscu i jazdy prosto
+#-Wykrywanie ścian
+#-Precyzyjny obrót
+#-Labirynt (16x16)
+#-Mapowanie
+#-Przeliczanie najszybszej trasy
+#-Samodzielne zasilanie
+#-Pomiar czasu
+#-Wykrycie celu
+#-10 minut czasu
+#-Karta SD
