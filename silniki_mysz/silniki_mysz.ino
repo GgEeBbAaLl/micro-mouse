@@ -1,6 +1,7 @@
 // (c) Michael Schoeffler 2016, http://www.mschoeffler.de
 
-const int enb = 9; // pwn pin
+const int enb_motor_1 = 8; // pwm pin motor 1
+const int enb_motor_2 = 9; // pwm pin motor 2
 const int in1 = 6; //first motor pin 1
 const int in2 = 7;// first motor pin 2
 const int in3 = 3;// second motor pin 1
@@ -14,19 +15,16 @@ void setup() {
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
-  pinMode(enb, OUTPUT);
+  pinMode(enb_motor_1, OUTPUT);
+  pinMode(enb_motor_2, OUTPUT);
 }
 
-void stop_motor (){
-  analogWrite(enb, 0);
-}
-
-void slow() {
-  analogWrite(enb, motor_slow_value);
-}
-
-void fast() {
-  analogWrite(enb, motor_fast_value);
+void set_motor_power (int motor, int power){
+  if (motor == 1) {
+    analogWrite(enb_motor_1, power);
+  } else if (motor == 2) {
+    analogWrite(enb_motor_2, power);
+  }
 }
 
 void set_direction(int motor, int n) { // motor = 1 or 2 (representing motor number)
@@ -54,15 +52,19 @@ void loop() {
   set_direction(2, 1);
   // digitalWrite(in3, LOW);
   // digitalWrite(in4, HIGH);
-  slow();
+  set_motor_power(1, motor_slow_value);
+  set_motor_power(2, motor_slow_value);
   delay(5000);
-  fast();
+  set_motor_power(1, motor_fast_value);
+  set_motor_power(2, motor_fast_value);  
   delay(5000);
   // change of direction
   set_direction(1, -1);
   set_direction(2, -1);
-  slow();
+  set_motor_power(1, motor_slow_value);
+  set_motor_power(2, motor_slow_value);
   delay(5000);
-  fast();
+  set_motor_power(1, motor_fast_value);
+  set_motor_power(2, motor_fast_value);    
   delay(5000);
 }
