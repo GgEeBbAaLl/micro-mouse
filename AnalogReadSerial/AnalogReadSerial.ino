@@ -1,32 +1,42 @@
-// Define Trig and Echo pin:
+
 #define trigPin 2
 #define echoPin 3
-// Define variables:
+
 long duration;
 int distance;
+int return_distance = 10;
+bool is_wall = false;
 
-void setup() {
-  // Define inputs and outputs:
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-  //Begin Serial communication at a baudrate of 9600:
-  Serial.begin(9600);
-}
-void loop() {
-  // Clear the trigPin by setting it LOW:
+
+bool check_wall()
+{
+  is_wall = false;
   digitalWrite(trigPin, LOW);
+
   delayMicroseconds(5);
-  // Trigger the sensor by setting the trigPin high for 10 microseconds:
   digitalWrite(trigPin, HIGH);
+
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
-  // Read the echoPin, pulseIn() returns the duration (length of the pulse) in microseconds:
+
   duration = pulseIn(echoPin, HIGH);
-  // Calculate the distance:
+
   distance = duration * 0.034 / 2;
-  // Print the distance on the Serial Monitor (Ctrl+Shift+M):
-  Serial.print("Distance = ");
-  Serial.print(distance);
-  Serial.println(" cm");
-  delay(25);
+
+  if (distance < return_distance)
+  {
+    is_wall = true;
+  }  
+  return(is_wall);
+}
+void setup()
+{
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+} 
+
+void loop ()
+{
+  Serial.println("a");
 }
