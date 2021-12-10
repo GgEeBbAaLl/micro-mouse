@@ -1,14 +1,12 @@
-// (c) Michael Schoeffler 2016, http://www.mschoeffler.de
-
 #include "ArxContainer.h"
 
 // motors
-const int enb_motor_1 = 8; // pwm pin motor 1
-const int enb_motor_2 = 9; // pwm pin motor 2
-const int in1 = 6; //first motor pin 1
-const int in2 = 7;// first motor pin 2
-const int in3 = 3;// second motor pin 1
-const int in4 = 2; // second motor pin 2
+const int enb_motor_1 = 9; // pwm pin motor 1
+const int enb_motor_2 = 10; // pwm pin motor 2
+const int in1 = 3; //first motor pin 1
+const int in2 = 4;// first motor pin 2
+const int in3 = 5;// second motor pin 1
+const int in4 = 6; // second motor pin 2
 
 const int motor_slow_value = 128;
 const int motor_fast_value = 255;
@@ -17,6 +15,10 @@ const int motor_fast_value = 255;
 const int LABIRYNT_WIDTH = 16;
 const int LABIRYNT_HEIGHT = 16;
 const int BOX_LENGHT = 20; // cm
+
+// vision sensor setup
+const int trigPin = 1;
+const int echoPin = 3;
 
 struct Node {
   byte walls;
@@ -112,17 +114,29 @@ class AStar
   
 };
 
-// path finding
+// detecting distance 
+bool check_wall(int return_distance)
+{
+  digitalWrite(trigPin, LOW);
 
-void setup() {
-  pinMode(in1, OUTPUT);
-  pinMode(in2, OUTPUT);
-  pinMode(in3, OUTPUT);
-  pinMode(in4, OUTPUT);
-  pinMode(enb_motor_1, OUTPUT);
-  pinMode(enb_motor_2, OUTPUT);
+  delayMicroseconds(5);
+  digitalWrite(trigPin, HIGH);
+
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+
+  double distance = duration * 0.034 / 2;
+
+  Serial.print("Distance: ");
+  Serial.println(distance);
+
+  if ((int)distance < return_distance) return true;
+  return false;
 }
 
+// bit operations
 byte set_bit (byte data, int n) {
   unsigned int bit_index = n % 8;
   byte bit_mask = (1 << bit_index);
@@ -201,27 +215,26 @@ void turn_right (int power, int duration)
   set_direction(2, -1);
   set_motor_power(1, power);
   set_motor_power(2, power);
-  
 }
 
-void loop() {
-//  set_direction(1, 1);
-//  set_direction(2, 1);
-//  // digitalWrite(in3, LOW);
-//  // digitalWrite(in4, HIGH);
-//  set_motor_power(1, motor_slow_value);
-//  set_motor_power(2, motor_slow_value);
-//  delay(5000);
-//  set_motor_power(1, motor_fast_value);
-//  set_motor_power(2, motor_fast_value);  
-//  delay(5000);
-//  // change of direction
-//  set_direction(1, -1);
-//  set_direction(2, -1);
-//  set_motor_power(1, motor_slow_value);
-//  set_motor_power(2, motor_slow_value);
-//  delay(5000);
-//  set_motor_power(1, motor_fast_value);
-//  set_motor_power(2, motor_fast_value);    
-//  delay(5000);
+void setup() {
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+  pinMode(enb_motor_1, OUTPUT);
+  pinMode(enb_motor_2, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() 
+{
+  forward(motor_fast_value);
+  delay(2000);
+  forward(motor_slow_value);
+  delay(2000);
+  backward(motor_fast_value);
+  delay(2000);
+  backward(motor_slow_value);
+  delay(2000);
 }
