@@ -1,5 +1,27 @@
 import pyglet
 
+"""
+things to fo here:
+ - simulate an labirynth with n * n squares with given n 
+ - in each tick calculate the distance from the mouse to walls around
+ - in each tick calculate power for the motors based on change in inputs and last motors power
+ - determine where are walls and mark them on the virtual map
+ - find the shortest virtual path for given start, end point on the map
+
+library for visualisation: Pyglet - http://pyglet.org
+shortest path algorithm: A* / Djistra 
+
+predictions of movement and calculation of power
+ - if input from left and right value are the same, mouse is in the middle of the cell width 
+ - if input from main (heagding forward) sensor is lesser than previous and statement above is true we moving toward a wall 
+ - ... 
+
+rotating conditions:
+ - ...
+ - ...
+
+"""
+
 last = {
     "motors" : [
         0, 0
