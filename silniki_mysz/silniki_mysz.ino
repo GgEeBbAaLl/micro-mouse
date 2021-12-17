@@ -20,6 +20,7 @@ const int BOX_LENGHT = 20; // cm
 const int trigPin = 1;
 const int echoPin = 3;
 
+/*
 struct Node {
   byte walls;
   byte x;
@@ -113,6 +114,7 @@ class AStar
   }
   
 };
+*/
 
 // detecting distance 
 bool check_wall(int return_distance)
@@ -229,12 +231,14 @@ void setup() {
 
 void loop() 
 {
-  forward(motor_fast_value);
+  set_direction(1, 1);
+  set_direction(2, -1);
+  set_motor_power(1, 255);
+  set_motor_power(2, 255);
   delay(2000);
-  forward(motor_slow_value);
-  delay(2000);
-  backward(motor_fast_value);
-  delay(2000);
-  backward(motor_slow_value);
+  set_direction(1, -1);
+  set_direction(2, 1);
+  set_motor_power(1, 255);
+  set_motor_power(2, 255);
   delay(2000);
 }
